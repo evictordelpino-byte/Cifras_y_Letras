@@ -1,0 +1,62 @@
+[
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/cifras_set.dir/src/cifras_set.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/cifras_set.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/cifras_set.cpp",
+  "output": "CMakeFiles/cifras_set.dir/src/cifras_set.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/cifras_set.dir/src/bolsa_letras.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/bolsa_letras.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/bolsa_letras.cpp",
+  "output": "CMakeFiles/cifras_set.dir/src/bolsa_letras.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/cifras_set.dir/src/diccionario.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/diccionario.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/diccionario.cpp",
+  "output": "CMakeFiles/cifras_set.dir/src/diccionario.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/cifras_set.dir/src/letras.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras.cpp",
+  "output": "CMakeFiles/cifras_set.dir/src/letras.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/cifras_set.dir/src/letras_set.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras_set.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras_set.cpp",
+  "output": "CMakeFiles/cifras_set.dir/src/letras_set.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/letras_set.dir/src/letras_set.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras_set.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras_set.cpp",
+  "output": "CMakeFiles/letras_set.dir/src/letras_set.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/letras_set.dir/src/bolsa_letras.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/bolsa_letras.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/bolsa_letras.cpp",
+  "output": "CMakeFiles/letras_set.dir/src/bolsa_letras.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/letras_set.dir/src/cifras_set.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/cifras_set.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/cifras_set.cpp",
+  "output": "CMakeFiles/letras_set.dir/src/cifras_set.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/letras_set.dir/src/diccionario.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/diccionario.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/diccionario.cpp",
+  "output": "CMakeFiles/letras_set.dir/src/diccionario.cpp.o"
+},
+{
+  "directory": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras",
+  "command": "/usr/bin/g++  -I/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include -g3 -gdwarf-2 -std=gnu++14 -o CMakeFiles/letras_set.dir/src/letras.cpp.o -c /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras.cpp",
+  "file": "/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/src/letras.cpp",
+  "output": "CMakeFiles/letras_set.dir/src/letras.cpp.o"
+}
+]

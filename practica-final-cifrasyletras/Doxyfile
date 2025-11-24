@@ -1,0 +1,6 @@
+PROJECT_NAME           = "Práctica final - Juego de las Letras"
+OUTPUT_DIRECTORY       = /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/doc_doxygen/
+INPUT                  = /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./include /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./src /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./doc
+GENERATE_LATEX         = NO
+IMAGE_PATH             = /home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/./doc
+EXTRACT_PRIVATE	       = NO

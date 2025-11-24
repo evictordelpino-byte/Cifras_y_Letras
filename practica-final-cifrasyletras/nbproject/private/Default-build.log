@@ -1,0 +1,12 @@
+[  7%] Building CXX object CMakeFiles/cifras_set.dir/src/cifras_set.cpp.o
+[ 15%] Building CXX object CMakeFiles/cifras_set.dir/src/bolsa_letras.cpp.o
+[ 23%] Building CXX object CMakeFiles/cifras_set.dir/src/diccionario.cpp.o
+[ 30%] Building CXX object CMakeFiles/cifras_set.dir/src/letras.cpp.o
+[ 38%] Building CXX object CMakeFiles/cifras_set.dir/src/letras_set.cpp.o
+[ 46%] Linking CXX executable bin/cifras_set
+/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o: en la función `_start':
+(.text+0x1b): undefined reference to `main'
+collect2: error: ld returned 1 exit status
+gmake[2]: *** [CMakeFiles/cifras_set.dir/build.make:161: bin/cifras_set] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:87: CMakeFiles/cifras_set.dir/all] Error 2
+gmake: *** [Makefile:91: all] Error 2

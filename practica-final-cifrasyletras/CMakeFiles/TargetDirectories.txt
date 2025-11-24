@@ -1,0 +1,5 @@
+/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/CMakeFiles/cifras_set.dir
+/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/CMakeFiles/letras_set.dir
+/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/CMakeFiles/doc_doxygen.dir
+/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/CMakeFiles/edit_cache.dir
+/home/usuario/Escritorio/ED/Cifras_y_Letras/practica-final-cifrasyletras/CMakeFiles/rebuild_cache.dir

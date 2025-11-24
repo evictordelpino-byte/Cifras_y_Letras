@@ -1,0 +1,1 @@
+/usr/bin/g++ -g3 -gdwarf-2 CMakeFiles/letras_set.dir/src/letras_set.cpp.o CMakeFiles/letras_set.dir/src/bolsa_letras.cpp.o CMakeFiles/letras_set.dir/src/cifras_set.cpp.o CMakeFiles/letras_set.dir/src/diccionario.cpp.o CMakeFiles/letras_set.dir/src/letras.cpp.o -o bin/letras_set 
