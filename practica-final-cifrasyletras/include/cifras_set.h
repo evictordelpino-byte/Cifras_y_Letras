@@ -1,23 +1,24 @@
 #ifndef __CIFRAS_SET_H__
 #define __CIFRAS_SET_H__
 #include <set>
+#include <vector>
 #include <iostream>
 
 using namespace std;
 
 class Cifras{
 private:
-    multiset cifras;
+    multiset<int> cifras;
     int objetivo;
-    multiset respuesta;
+    vector<char> respuesta;
 public:
-    Cifras(multiset &c, int obj){
+    Cifras(multiset<int> &c, int obj){
         cifras = c;
         objetivo = obj;
     }
     
-    multiset solucion(){
-        
+    vector<char> solucion(){
+
     }
 };
 
