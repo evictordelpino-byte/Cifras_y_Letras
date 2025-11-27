@@ -3,7 +3,7 @@
 
 #include <set>
 #include <iostream>
-#include <iofstream>
+#include <oifstream>
 #include <string>
 
 using namespace std;
@@ -28,6 +28,12 @@ class DICCIONARIO {
          * @param nombre_fichero Nombre del fichero de texto que contiene las palabras
          */
         DICCIONARIO(const string& nombre_fichero);
+
+        /**
+         * @brief destructor de la clase DICCIONARIO
+         * 
+         */
+        ~DICCIONARIO();
 
         /**
          * @brief Carga las palabras de un fichero de texto en el diccionario

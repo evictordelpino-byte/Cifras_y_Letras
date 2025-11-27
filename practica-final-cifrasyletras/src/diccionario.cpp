@@ -15,6 +15,10 @@ DICCIONARIO::DICCIONARIO(const string& nombre_fichero){
     cargar_diccionario(nombre_fichero);
 }
 
+DICCIONARIO::~DICCIONARIO(){
+    palabras.clear();
+}
+
 bool DICCIONARIO::cargar_diccionario(const string &nombre_fichero){
     palabras.clear();
     string palabra = "";
