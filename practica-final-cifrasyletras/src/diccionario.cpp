@@ -40,6 +40,10 @@ void DICCIONARIO::mostrar_diccionario() const{
     cout << this;
 }
 
+int DICCIONARIO::size() const {
+    return palabras.size();
+}
+
 bool DICCIONARIO::Esta(const string& palabra) const{
     return palabras.find(palabra) != palabras.end();
 }
@@ -54,23 +58,37 @@ vector<string> DICCIONARIO::PalabrasLongitud(int longitud) const{
     return resultado;
 }
 
-set<string>::const_iterator DICCIONARIO::cbegin() const{
-    return palabras.cbegin();
+DICCIONARIO::iterator::iterator (){
+    it = set<string>::iterator();
+}
+DICCIONARIO::iterator::iterator (set<string>::iterator i){
+    it = i;
+}
+string DICCIONARIO::iterator::operator *(){
+    return *it;
+}
+DICCIONARIO::iterator & DICCIONARIO::iterator::operator ++(){
+    ++it;
+    return *this;
+}
+bool DICCIONARIO::iterator::operator ==(const iterator &i){
+    return it == i.it;
+}
+bool DICCIONARIO::iterator::operator !=(const iterator &i){
+    return it != i.it;
 }
 
-set<string>::const_iterator DICCIONARIO::cend() const{
-    return palabras.cend();
-}
-set<string>::iterator DICCIONARIO::begin(){
-    return palabras.begin();
+
+DICCIONARIO::iterator DICCIONARIO::begin(){
+    return DICCIONARIO::iterator(palabras.begin());
 }
 
-set<string>::iterator DICCIONARIO::end(){
-    return palabras.end();
+DICCIONARIO::iterator DICCIONARIO::end(){
+    return DICCIONARIO::iterator(palabras.end());
 }
 
-ostream& operator<<(ostream& out, const DICCIONARIO& dic){
-    for(auto it = dic.cbegin(); it != dic.cend(); ++it){
+ostream& operator<<(ostream& out, DICCIONARIO& dic){
+    for(auto it = dic.begin(); it != dic.end(); ++it){
             out << *it << endl;
     }
     return out;

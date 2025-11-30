@@ -45,48 +45,43 @@ class DICCIONARIO {
         bool cargar_diccionario(const string &nombre_fichero);
 
         /**
+         * @brief Devuelve el numero de palabras en el diccionario
+         **/
+        int size() const ;
+
+        /**
          * @brief Muestra todas las palabras del diccionario por la salida estándar
          */
         void mostrar_diccionario() const;
 
         /**
-         * @brief Busca una palabra en el diccionario
-         * @param palabra Palabra a buscar
-         * @return true si la palabra se encuentra en el diccionario, false en caso contrario
+         * @brief Indica si una palabra está en el diccionario o no
+         * @param palabra: la palabra que se quiere buscar
+         * @return true si la palabra esta en el diccionario. False en caso contrario
          */
         bool Esta(const string& palabra) const;
 
         /**
-         * @brief Muestra todas las palabras del diccionario de una longitud dada
-         * 
-         * @param longitud Longitud de las palabras a buscar
-         * @return vector<string> Vector con las palabras de la longitud dada
+         * @brief Obtiene todas las palabras en el diccionario de un longitud dada
+         * @param longitud: la longitud de las palabras de salida
+         * @return un vector con las palabras de longitud especifica en el parametro de entrada
          */
         vector<string> PalabrasLongitud(int longitud) const;
 
-        /**
-         * @brief Devuelve un iterador al inicio de la lista de palabras
-         * @return Iterador al inicio de la lista de palabras
-         */
-        set<string>::const_iterator cbegin() const;
-
-        /**
-         * @brief Devuelve un iterador al final de la lista de palabras
-         * @return Iterador al final de la lista de palabras
-         */
-        set<string>::const_iterator cend() const;
-
-        /**
-         * @brief Devuelve un iterador al inicio de la lista de palabras
-         * @return Iterador al inicio de la lista de palabras
-         */
-        set<string>::iterator begin();
-
-        /**
-         * @brief Devuelve un iterador al final de la lista de palabras
-         * @return Iterador al final de la lista de palabras
-         */
-        set<string>::iterator end();
+        class iterator{
+            private:
+            set<string>::iterator it;
+            public:
+            iterator ();
+            iterator (set<string>::iterator i);
+            string operator *();
+            iterator & operator ++();
+            bool operator ==(const iterator &i);
+            bool operator !=(const iterator &i);
+            friend class DICCIONARIO;
+        };
+        iterator begin();
+        iterator end();
 
         /**
          * @brief Sobrecarga del operador de inserción para escribir el diccionario en un flujo de salida
@@ -95,7 +90,7 @@ class DICCIONARIO {
          * @param dic Diccionario a escribir
          * @return fstream& Flujo de salida modificado
          */
-        friend ostream& operator<<(ostream& out, const DICCIONARIO& dic);
+        friend ostream& operator<<(ostream& out, DICCIONARIO& dic);
 
         /**
          * @brief Sobrecarga del operador de extracción para leer un diccionario desde un flujo de entrada
@@ -106,8 +101,5 @@ class DICCIONARIO {
          */
         friend istream& operator>>(istream& in, DICCIONARIO& dic);
 };
-/*
-ostream& operator<<(ostream& out, const DICCIONARIO& dic);
-istream& operator>>(istream& in, DICCIONARIO& dic);
-*/
+
 #endif
