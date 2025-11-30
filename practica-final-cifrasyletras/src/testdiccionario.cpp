@@ -4,7 +4,7 @@
 #include <vector>
 #include <set>
 
-#include "diccionario.cpp"
+#include "diccionario.h"
 
 using namespace std;
 int main(int argc, char * argv[]){
@@ -18,7 +18,7 @@ int main(int argc, char * argv[]){
         cout<<"No puedo abrir el fichero "<<argv[1]<<endl;
         return 0;
     }
-    Diccionario D;
+    DICCIONARIO D;
     cout<<"Cargando diccionario...."<<endl;
     f>>D;
     cout<<"Leido el diccionario..."<<endl;
