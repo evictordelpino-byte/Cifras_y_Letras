@@ -1,3 +1,8 @@
+#include "bolsa_letras.h"
+#include "letras.h"
+
+using namespace std;
+
 #ifndef __LETRAS_SET_H__
 #define __LETRAS_SET_H__
 
@@ -12,6 +17,8 @@
  * palabra
  */
 
+
+
 /**
  * @brief TDA LettersSet
  *
@@ -20,4 +27,31 @@
  * que tenemos de la letra y la puntuación que dicha letra otorga cuando se
  * utiliza en una palabra
  */
+
+ class LettersSet {
+    private:
+        set<LETRASInfo> letras;
+    public:
+        // Constructor por defecto
+        LettersSet();
+
+        // Constructor con parámetros
+        LettersSet(const set<LETRASInfo>& letras);
+
+        // Destructor
+        ~LettersSet();
+
+        // Métodos de consulta
+        bool isEmpty() const;
+        int size() const;
+        bool contains(LETRASInfo letra) const;
+
+        // Métodos de modificación
+        void insert(LETRASInfo letra);
+        void erase(LETRASInfo letra);
+        
+        // Sobrecarga de operadores
+        friend ostream& operator<<(ostream& os, const LettersSet& letrasSet);
+
+ };
 #endif

@@ -10,4 +10,51 @@
  * palabra
  */
 
+ class LETRASInfo {
+    private:
+        char c; // caracter
+        int r; // repeticiones
+        int p; // puntuacion
+    public:
+        /**
+         * @brief 
+         * 
+         */
+        LETRASInfo();
+
+        /**
+         * @brief 
+         * 
+         */
+        LETRASInfo(char c, int r, int p);
+
+        /**
+         * @brief 
+         * 
+         * @return char 
+         */
+        char caracter() const;
+
+        /**
+         * @brief 
+         * 
+         * @return int 
+         */
+        int repeticiones() const;
+
+        /**
+         * @brief 
+         * 
+         * @return int 
+         */
+        int puntuacion() const;
+
+        /**
+         * @brief 
+         * 
+         * @param c 
+         */
+        void SetRepeticiones(int r);
+ };
+
 #endif

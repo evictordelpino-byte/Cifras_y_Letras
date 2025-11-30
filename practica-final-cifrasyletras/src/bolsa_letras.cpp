@@ -1,10 +1,13 @@
 #include "bolsa_letras.h"
+#include <set>
+
+#include "letras.h"
 
 BolsaLetras::BolsaLetras(){
-    Letras = multiset<char>();
+    Letras = set<LETRASInfo>();
 }
 
-BolsaLetras::BolsaLetras(const multiset<char>& letras){
+BolsaLetras::BolsaLetras(const set<LETRASInfo>& letras){
     Letras = letras;
 }
 
@@ -16,25 +19,25 @@ bool BolsaLetras::EstaVacia() const{
     return Letras.empty();
 }
 
-int BolsaLetras::Tam() const{
+int BolsaLetras::size() const{
     return Letras.size();
 }
 
-bool BolsaLetras::Pertenece(char letra) const{
+bool BolsaLetras::Pertenece(LETRASInfo letra) const{
     return Letras.find(letra) != Letras.end();
 }
 
-void BolsaLetras::Insertar(char letra){
+void BolsaLetras::Insertar(LETRASInfo letra){
     Letras.insert(letra);
 }
 
-void BolsaLetras::Borrar(char letra){
+void BolsaLetras::Borrar(LETRASInfo letra){
     Letras.erase(letra);
 }
 
 ostream& operator<<(ostream& os, const BolsaLetras& bolsa){
     for(auto it = bolsa.Letras.begin(); it != bolsa.Letras.end(); ++it){
-        os << *it << " ";
+        os << (*it).caracter() << " " << (*it).repeticiones() << " " << (*it).puntuacion() << endl;
     }
     return os;
 }
