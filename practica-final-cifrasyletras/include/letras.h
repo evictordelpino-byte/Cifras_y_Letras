@@ -1,3 +1,5 @@
+#include <iostream>
+
 #ifndef __LETRAS_H__
 #define __LETRAS_H__
 
@@ -56,7 +58,11 @@
          */
         void SetRepeticiones(int r);
 
-        LETRASInfo& operator=(const LETRASInfo& other);
+        LETRASInfo& operator=(const LETRASInfo& otro);
+        bool operator==(const LETRASInfo& otro) const;
+        bool operator==(char otro) const;
+        bool operator<(const LETRASInfo& otro) const;
+        bool operator<(char otro) const;
 
         friend istream& operator>>(istream& is, LETRASInfo& letra);
         friend ostream& operator<<(ostream& os, const LETRASInfo& letra);

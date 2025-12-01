@@ -24,7 +24,8 @@ Letras_Set::Letras_Set(const string& nombre_fichero){
         cerr << "Error al abrir el fichero " << nombre_fichero << endl;
         exit(1);
     }
-    while(in >> Letra){
+    while(!in.eof()){
+        in >> Letra;
         letras.insert(Letra);
     }
     in.close();
@@ -33,6 +34,32 @@ Letras_Set::Letras_Set(const string& nombre_fichero){
 set<LETRASInfo>::iterator Letras_Set::find(LETRASInfo letra){
     auto it = letras.find(letra);
     return it;
+}
+
+int Letras_Set::puntuacion(char letra) const{
+    auto it = letras.find(LETRASInfo(letra, 0, 0));
+    if(it != letras.end()){
+        return (*it).puntuacion();
+    } else {
+        return 0;
+    }
+}
+
+void Letras_Set::insert(LETRASInfo letra){
+    letras.insert(letra);
+}
+
+void Letras_Set::insert(char letra){
+    if(find(LETRASInfo(letra, 0, 0)) == letras.end()){
+        letras.insert(LETRASInfo(letra, 1, 1));
+    } else {
+        // Si ya existe, aumentar las repeticiones
+        auto it = find(LETRASInfo(letra, 0, 0));
+        LETRASInfo letra_actual = *it;
+        letras.erase(it);
+        letra_actual.SetRepeticiones(letra_actual.repeticiones() + 1);
+        letras.insert(letra_actual);
+    }
 }
 
 Letras_Set::iterator::iterator(){
@@ -79,4 +106,12 @@ ostream& operator<<(ostream& os, const Letras_Set& letras_){
         os << (*it).caracter() << " " << (*it).repeticiones() << " " << (*it).puntuacion() << endl;
     }
     return os;
+}
+
+int puntuacion_palabra(const string& palabra, const Letras_Set& letras){
+    int puntos = 0;
+    for(char c : palabra){
+        puntos += letras.puntuacion(c);
+    }
+    return puntos;
 }

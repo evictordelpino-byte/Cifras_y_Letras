@@ -41,10 +41,12 @@ using namespace std;
         // Métodos de consulta
         bool isEmpty() const;
         int size() const;
-        bool contains(LETRASInfo letra) const;
+        int puntuacion(char letra) const;
+        set<LETRASInfo>::iterator find(LETRASInfo letra) const;
 
         // Métodos de modificación
         void insert(LETRASInfo letra);
+        void insert(char letra);
         void erase(LETRASInfo letra);
         
         // Sobrecarga de operadores
