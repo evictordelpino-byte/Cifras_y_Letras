@@ -6,6 +6,7 @@
 #include <string>
 
 #include "letras.h"
+#include "letras_set.h"
 
 using namespace std;
 
@@ -16,13 +17,16 @@ using namespace std;
 
  class BolsaLetras {
     private:
-        set<LETRASInfo> Letras;
+        multiset<LETRASInfo> Letras;
     public:
         // Constructor por defecto
         BolsaLetras();
 
         // Constructor con parámetros
-        BolsaLetras(const set<LETRASInfo>& letras);
+        BolsaLetras(const Letras_Set& letras);
+
+        // Constructor a partir de un fichero
+        BolsaLetras(const multiset<LETRASInfo>& letras);
 
         // Destructor
         ~BolsaLetras();
@@ -31,6 +35,7 @@ using namespace std;
         bool EstaVacia() const;
         int size() const;
         bool Pertenece(LETRASInfo letra) const;
+        multiset<LETRASInfo> saca(int n);
 
         // Métodos de modificación
         void Insertar(LETRASInfo letra);
@@ -38,6 +43,5 @@ using namespace std;
         
         // Sobrecarga de operadores
         friend ostream& operator<<(ostream& os, const BolsaLetras& bolsa);
-
  };
 #endif

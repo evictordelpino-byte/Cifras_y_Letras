@@ -1,5 +1,6 @@
-#include "CifrasSolver.h"
+#include "cifras_set.h"
 #include <cstdlib>  // std::abs
+#include <iostream>
 
 // Genera todas las operaciones posibles entre a y b que cumplan las reglas del juego
 std::vector<CifrasSolver::Operacion>

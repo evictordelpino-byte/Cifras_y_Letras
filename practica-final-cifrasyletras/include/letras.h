@@ -17,44 +17,49 @@
         int p; // puntuacion
     public:
         /**
-         * @brief 
+         * @brief Constructor por defecto
          * 
          */
         LETRASInfo();
 
         /**
-         * @brief 
+         * @brief Constructor con parámetros
          * 
          */
         LETRASInfo(char c, int r, int p);
 
         /**
-         * @brief 
+         * @brief devuelve el caracter de la letra
          * 
          * @return char 
          */
         char caracter() const;
 
         /**
-         * @brief 
+         * @brief devuelve el número de repeticiones de la letra
          * 
          * @return int 
          */
         int repeticiones() const;
 
         /**
-         * @brief 
+         * @brief devuelve la puntuación de la letra
          * 
          * @return int 
          */
         int puntuacion() const;
 
         /**
-         * @brief 
+         * @brief Cambia el número de repeticiones
          * 
-         * @param c 
+         * @param r 
          */
         void SetRepeticiones(int r);
+
+        LETRASInfo& operator=(const LETRASInfo& other);
+
+        friend istream& operator>>(istream& is, LETRASInfo& letra);
+        friend ostream& operator<<(ostream& os, const LETRASInfo& letra);
  };
 
 #endif

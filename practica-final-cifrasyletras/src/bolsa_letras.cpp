@@ -1,14 +1,26 @@
 #include "bolsa_letras.h"
 #include <set>
+#include <fstream>
+#include <random>
 
 #include "letras.h"
+#include "letras_set.h"
 
 BolsaLetras::BolsaLetras(){
-    Letras = set<LETRASInfo>();
+    Letras = multiset<LETRASInfo>();
 }
 
-BolsaLetras::BolsaLetras(const set<LETRASInfo>& letras){
+BolsaLetras::BolsaLetras(const multiset<LETRASInfo>& letras){
     Letras = letras;
+}
+
+BolsaLetras::BolsaLetras(const Letras_Set& letras){
+    Letras = multiset<LETRASInfo>();
+    for(auto it = letras.begin(); it != letras.end(); ++it){
+        for(int i = 0; i < (*it).repeticiones(); ++i){
+            Letras.insert(LETRASInfo((*it).caracter(), 1, (*it).puntuacion()));
+        }
+    }
 }
 
 BolsaLetras::~BolsaLetras(){
@@ -35,9 +47,26 @@ void BolsaLetras::Borrar(LETRASInfo letra){
     Letras.erase(letra);
 }
 
+multiset<LETRASInfo> BolsaLetras::saca(int n){
+    multiset<LETRASInfo> sacadas;
+    for(int i = 0; i < n; ++i){
+        if(Letras.empty()){
+            break;
+        }
+        // Generar un índice aleatorio
+        auto it = Letras.begin();
+        std::advance(it, rand() % Letras.size());
+        // Insertar la letra en el conjunto sacadas
+        sacadas.insert(*it);
+        // Borrar la letra de la bolsa
+        Letras.erase(it);
+    }
+    return sacadas;
+}
+
 ostream& operator<<(ostream& os, const BolsaLetras& bolsa){
     for(auto it = bolsa.Letras.begin(); it != bolsa.Letras.end(); ++it){
-        os << (*it).caracter() << " " << (*it).repeticiones() << " " << (*it).puntuacion() << endl;
+        os << *it << endl;
     }
     return os;
 }

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <set>
-#include <multiset> // según el compilador puede bastar con <set>, pero lo dejo explícito
+// #include <multiset> // según el compilador puede bastar con <set>, pero lo dejo explícito
 
 class CifrasSolver {
 public:
