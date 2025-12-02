@@ -42,7 +42,7 @@ using namespace std;
         bool isEmpty() const;
         int size() const;
         int puntuacion(char letra) const;
-        set<LETRASInfo>::iterator find(LETRASInfo letra) const;
+        const set<LETRASInfo>::iterator find(LETRASInfo letra) const;
 
         // Métodos de modificación
         void insert(LETRASInfo letra);

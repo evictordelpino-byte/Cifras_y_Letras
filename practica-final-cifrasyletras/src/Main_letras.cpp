@@ -1,34 +1,38 @@
 #include <iostream>
 #include <string>
+
 #include "diccionario.h"
 #include "bolsa_letras.h"
 #include "letras_set.h"
+#include "letras.h"
 
 using namespace std;
 
 // MAIN PARA EL PROGRAMA DE LAS LETRAS
 bool chequea_posible(const string& palabra, const Letras_Set& letras_sacadas);
 int puntuacion_palabra(const string& palabra, const Letras_Set& letras);
-set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const DICCIONARIO& dic, char modo_juego);
+set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const Diccionario& dic, char modo_juego);
 
 int main(int argc, char** argv) {
 
     if(argc < 5) {
         cout << "Como jugar: " << endl;
-        cout << "Escribir: " << argv[0] << " <diccionario.txt> <letras.txt> <num_letras> <modo_juego>" << endl;
+        // cout << "Escribir: " << argv[0] << " <diccionario.txt> <letras.txt> <num_letras> <modo_juego>" << endl;
+        cout << "Escribir: ./letras <diccionario.txt> <letras.txt> <num_letras> <modo_juego>" << endl;
         cout << "diccionario.txt: fichero de texto con el diccionario de palabras" << endl;
         cout << "letras.txt: fichero de texto con las letras y su información (puntuacion y repeticiones)" << endl;
         cout << "num_letras: número de letras a utilizar en la partida" << endl;
         cout << "modo_juego: P para jugar por puntos y L par jugar por cantidad de letras" << endl;
         return 1;
     }
-    if(argv[4][0] != 'P' && argv[4][0] != 'L') {
+    if(toupper(argv[4][0]) != 'P' && toupper(argv[4][0]) != 'L') {
         cout << "Modo de juego no válido. Usar P para puntos o L para letras." << endl;
         return 1;
     }
 
-    DICCIONARIO dic(argv[1]);
+    Diccionario dic(argv[1]);
     Letras_Set letras(argv[2]);
+    cout << "Letras leidas" << endl;
     int num_letras = stoi(argv[3]);
     char modo_juego = argv[4][0];
 
@@ -106,7 +110,7 @@ bool chequea_posible(const string& palabra, const Letras_Set& letras_sacadas) {
     return true;
 }
 
-set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const DICCIONARIO& dic, char modo_juego) {
+set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const Diccionario& dic, char modo_juego) {
     set<string> soluciones;
     int mejor_puntuacion = 0;
     vector<string> palabras_candidatas;
@@ -137,11 +141,11 @@ set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const DICCIONAR
                     soluciones.insert(palabra);
                 }
             } else if(modo_juego == 'L'){
-                if(palabra.length() > mejor_puntuacion){
+                if(int(palabra.length()) > mejor_puntuacion){
                     mejor_puntuacion = palabra.length();
                     soluciones.clear();
                     soluciones.insert(palabra);
-                } else if(palabra.length() == mejor_puntuacion){
+                } else if(int(palabra.length()) == mejor_puntuacion){
                     soluciones.insert(palabra);
                 }
             }
@@ -149,3 +153,6 @@ set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const DICCIONAR
     }
     return soluciones;
 }
+
+// en el directorio practica-final-cifrasyletras/
+// compilar con: g++ -std=c++17 -Wall -Wextra -I include -o letras src/Main_letras.cpp src/diccionario.cpp src/letras.cpp src/letras_set.cpp src/bolsa_letras.cpp

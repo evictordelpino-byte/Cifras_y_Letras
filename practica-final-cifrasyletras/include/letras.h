@@ -64,8 +64,8 @@
         bool operator<(const LETRASInfo& otro) const;
         bool operator<(char otro) const;
 
-        friend istream& operator>>(istream& is, LETRASInfo& letra);
-        friend ostream& operator<<(ostream& os, const LETRASInfo& letra);
+        friend std::istream& operator>>(std::istream& is, LETRASInfo& letra);
+        friend std::ostream& operator<<(std::ostream& os, const LETRASInfo& letra);
  };
 
 #endif

@@ -1,6 +1,10 @@
 #include "letras_set.h"
 #include "letras.h"
 
+Letras_Set::Letras_Set(){
+    letras = set<LETRASInfo>();
+}
+
 Letras_Set::Letras_Set(const multiset<LETRASInfo>& letras_repetidas){
     letras = set<LETRASInfo>();
     LETRASInfo letra_insertar = *letras_repetidas.begin();
@@ -24,6 +28,11 @@ Letras_Set::Letras_Set(const string& nombre_fichero){
         cerr << "Error al abrir el fichero " << nombre_fichero << endl;
         exit(1);
     }
+
+    while(in.peek() =='#'){ // salta las lineas de comentario
+        in.getline(nullptr, 0);
+    }
+    
     while(!in.eof()){
         in >> Letra;
         letras.insert(Letra);
@@ -31,9 +40,8 @@ Letras_Set::Letras_Set(const string& nombre_fichero){
     in.close();
 }
 
-set<LETRASInfo>::iterator Letras_Set::find(LETRASInfo letra){
-    auto it = letras.find(letra);
-    return it;
+Letras_Set::~Letras_Set(){
+    letras.clear();
 }
 
 int Letras_Set::puntuacion(char letra) const{
@@ -60,6 +68,10 @@ void Letras_Set::insert(char letra){
         letra_actual.SetRepeticiones(letra_actual.repeticiones() + 1);
         letras.insert(letra_actual);
     }
+}
+
+int Letras_Set::size() const{
+    return letras.size();
 }
 
 Letras_Set::iterator::iterator(){
@@ -99,6 +111,16 @@ Letras_Set::iterator Letras_Set::begin() const{
 
 Letras_Set::iterator Letras_Set::end() const{
     return iterator(letras.end());
+}
+
+set<LETRASInfo>::iterator Letras_Set::find(LETRASInfo letra){
+    auto it = letras.find(letra);
+    return it;
+}
+
+const set<LETRASInfo>::iterator Letras_Set::find(LETRASInfo letra) const{
+    auto it = letras.find(letra);
+    return it;
 }
 
 ostream& operator<<(ostream& os, const Letras_Set& letras_){

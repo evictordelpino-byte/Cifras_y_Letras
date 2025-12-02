@@ -6,36 +6,36 @@
 
 using namespace std;
 
-#ifndef __DICCIONARIO_H__
-#define __DICCIONARIO_H__
+#ifndef __Diccionario_H__
+#define __Diccionario_H__
 
 
 /**
- * @brief TDA DICCIONARIO
+ * @brief TDA Diccionario
  * @details Almacena las palabras de un fichero de texto y permite iterar sobre ellas
  *
  */
 
-class DICCIONARIO {
+class Diccionario {
     private:
         set<string> palabras; /**< Lista que almacena las palabras del diccionario */
     public:
         /**
-         * @brief Constructor por defecto de la clase DICCIONARIO
+         * @brief Constructor por defecto de la clase Diccionario
          */
-        DICCIONARIO();
+        Diccionario();
 
         /**
-         * @brief Constructor de la clase DICCIONARIO que carga las palabras de un fichero
+         * @brief Constructor de la clase Diccionario que carga las palabras de un fichero
          * @param nombre_fichero Nombre del fichero de texto que contiene las palabras
          */
-        DICCIONARIO(const string& nombre_fichero);
+        Diccionario(const string& nombre_fichero);
 
         /**
-         * @brief destructor de la clase DICCIONARIO
+         * @brief destructor de la clase Diccionario
          * 
          */
-        ~DICCIONARIO();
+        ~Diccionario();
 
         /**
          * @brief Carga las palabras de un fichero de texto en el diccionario
@@ -78,7 +78,7 @@ class DICCIONARIO {
             iterator & operator ++();
             bool operator ==(const iterator &i);
             bool operator !=(const iterator &i);
-            friend class DICCIONARIO;
+            friend class Diccionario;
         };
         iterator begin();
         iterator end();
@@ -90,7 +90,7 @@ class DICCIONARIO {
          * @param dic Diccionario a escribir
          * @return fstream& Flujo de salida modificado
          */
-        friend ostream& operator<<(ostream& out, DICCIONARIO& dic);
+        friend ostream& operator<<(ostream& out, Diccionario& dic);
 
         /**
          * @brief Sobrecarga del operador de extracción para leer un diccionario desde un flujo de entrada
@@ -99,7 +99,7 @@ class DICCIONARIO {
          * @param dic Diccionario donde se almacenarán las palabras leídas
          * @return fstream& Flujo de entrada modificado
          */
-        friend istream& operator>>(istream& in, DICCIONARIO& dic);
+        friend istream& operator>>(istream& in, Diccionario& dic);
 };
 
 #endif

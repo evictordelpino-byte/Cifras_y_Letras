@@ -18,7 +18,7 @@ int main(int argc, char * argv[]){
         cout<<"No puedo abrir el fichero "<<argv[1]<<endl;
         return 0;
     }
-    DICCIONARIO D;
+    Diccionario D;
     cout<<"Cargando diccionario...."<<endl;
     f>>D;
     cout<<"Leido el diccionario..."<<endl;
@@ -41,3 +41,6 @@ int main(int argc, char * argv[]){
     else 
         cout<<"Esa palabra no existe";
 }
+
+// en el directorio practica-final-cifrasyletras/
+// compilar con: g++ -o testdic -Wall -Wextra -std=c++17 src/testdiccionario.cpp src/diccionario.cpp -I include/
