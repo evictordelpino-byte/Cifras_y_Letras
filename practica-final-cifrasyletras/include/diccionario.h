@@ -90,7 +90,7 @@ class Diccionario {
          * @param dic Diccionario a escribir
          * @return fstream& Flujo de salida modificado
          */
-        friend ostream& operator<<(ostream& out, Diccionario& dic);
+        friend ostream& operator<<(ostream& out, const Diccionario& dic);
 
         /**
          * @brief Sobrecarga del operador de extracción para leer un diccionario desde un flujo de entrada

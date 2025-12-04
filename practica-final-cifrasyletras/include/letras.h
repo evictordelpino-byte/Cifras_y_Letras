@@ -30,6 +30,9 @@
          */
         LETRASInfo(char c, int r, int p);
 
+        LETRASInfo(const LETRASInfo& otro);
+
+
         /**
          * @brief devuelve el caracter de la letra
          * 

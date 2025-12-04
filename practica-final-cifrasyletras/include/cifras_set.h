@@ -1,42 +1,46 @@
-#ifndef CIFRAS_SOLVER_H
-#define CIFRAS_SOLVER_H
+#ifndef CIFRAS_SET_H
+#define CIFRAS_SET_H
 
 #include <vector>
 #include <set>
-// #include <multiset> // según el compilador puede bastar con <set>, pero lo dejo explícito
 
-class CifrasSolver {
+#include <multiset>
+>>>>>>> 048ca9c (Mis cambios locales en cifras y letras)
+
+using namespace std;
+
+class cifras_set {
 public:
-    // Estructura para devolver el resultado al usuario
-    struct Resultado {
-        bool exacto;        // true si se ha llegado exactamente al objetivo
-        int objetivo;       // objetivo que se quería alcanzar
-        int mejor_valor;    // mejor número obtenido
-        int diferencia;     // distancia entre mejor_valor y objetivo
-    };
-
-    // Método principal que resuelve una tirada
-    Resultado resolver(const std::vector<int> &numeros, int objetivo);
-
-private:
-    // Estructura interna para manejar operaciones entre dos números
     struct Operacion {
         int a;
         int b;
-        char op;       // '+', '-', '*', '/'
+        char op;
         int resultado;
     };
 
-    // Estado interno del algoritmo de búsqueda
-    int objetivo_actual;                      // objetivo con el que estamos trabajando
-    int mejor_encontrado;                    // mejor valor encontrado hasta el momento
-    int diferencia;                          // |mejor_encontrado - objetivo_actual|
-    std::set< std::multiset<int> > visitados; // estados de números ya explorados
+    struct Solucion {
+        bool exacto;
+        int objetivo;
+        int mejor_valor;
+        int diferencia;
+        vector<Operacion> operaciones;
+    };
 
-    // Funciones auxiliares
-    std::vector<Operacion> generarOperaciones(int a, int b) const;
-    void probarMejoria(const std::vector<int> &nums);
-    void backtrack(std::vector<int> nums);
+    Solucion resolver(const vector<int> &numeros_iniciales, int objetivo);
+
+private:
+    int objetivo_actual;
+    int mejor_encontrado;
+    int diferencia;
+    set< multiset<int> > visitados;
+    vector<Operacion> mejores_operaciones;
+
+    vector<Operacion> generarOperaciones(int a, int b) const;
+    void probarMejoria(const vector<int> &numeros,
+                       const vector<Operacion> &operaciones_hechas);
+    void buscar(vector<int> numeros,
+                vector<Operacion> operaciones_hechas);
 };
 
-#endif // CIFRAS_SOLVER_H
+#endif // CIFRAS_SET_H
+

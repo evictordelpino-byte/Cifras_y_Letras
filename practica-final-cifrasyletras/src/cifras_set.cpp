@@ -1,201 +1,168 @@
 #include "cifras_set.h"
-#include <cstdlib>  // std::abs
+
+#include <cstdlib> 
+
+
 #include <iostream>
 
-// Genera todas las operaciones posibles entre a y b que cumplan las reglas del juego
-std::vector<CifrasSolver::Operacion>
-CifrasSolver::generarOperaciones(int a, int b) const {
-    std::vector<Operacion> ops;
+using namespace std;
+
+// Genera todas las operaciones posibles entre dos números
+vector<cifras_set::Operacion>
+cifras_set::generarOperaciones(int a, int b) const {
+
+    vector<Operacion> ops;
+    Operacion op;
 
     // Suma
-    {
-        Operacion op;
-        op.a = a;
-        op.b = b;
-        op.op = '+';
-        op.resultado = a + b;
-        ops.push_back(op);
-    }
+    op = {a, b, '+', a + b};
+    ops.push_back(op);
 
     // Producto
-    {
-        Operacion op;
-        op.a = a;
-        op.b = b;
-        op.op = '*';
-        op.resultado = a * b;
-        ops.push_back(op);
-    }
+    op = {a, b, '*', a * b};
+    ops.push_back(op);
 
-    // Resta: solo se admiten resultados positivos
+    // Resta (solo si es positiva)
     if (a > b) {
-        Operacion op;
-        op.a = a;
-        op.b = b;
-        op.op = '-';
-        op.resultado = a - b;
-        if (op.resultado > 0) {
-            ops.push_back(op);
-        }
+        op = {a, b, '-', a - b};
+        if (op.resultado > 0) ops.push_back(op);
     } else if (b > a) {
-        Operacion op;
-        op.a = b;
-        op.b = a;
-        op.op = '-';
-        op.resultado = b - a;
-        if (op.resultado > 0) {
-            ops.push_back(op);
-        }
+        op = {b, a, '-', b - a};
+        if (op.resultado > 0) ops.push_back(op);
     }
 
-    // División exacta: solo si es entera y el resultado es positivo
+    // División exacta
     if (b != 0 && a % b == 0) {
-        Operacion op;
-        op.a = a;
-        op.b = b;
-        op.op = '/';
-        op.resultado = a / b;
-        if (op.resultado > 0) {
-            ops.push_back(op);
-        }
+        op = {a, b, '/', a / b};
+        if (op.resultado > 0) ops.push_back(op);
     } else if (a != 0 && b % a == 0) {
-        Operacion op;
-        op.a = b;
-        op.b = a;
-        op.op = '/';
-        op.resultado = b / a;
-        if (op.resultado > 0) {
-            ops.push_back(op);
-        }
+        op = {b, a, '/', b / a};
+        if (op.resultado > 0) ops.push_back(op);
     }
 
     return ops;
 }
 
-// Comprueba si alguno de los números actuales mejora la mejor solución guardada
-void CifrasSolver::probarMejoria(const std::vector<int> &nums) {
-    for (int v : nums) {
-        int diff = std::abs(v - objetivo_actual);
+// Comprueba si los números actuales mejoran la mejor solución encontrada
+void cifras_set::probarMejoria(const vector<int> &numeros,
+                               const vector<Operacion> &operaciones_hechas) {
+
+    for (int v : numeros) {
+        int diff = abs(v - objetivo_actual);
+
         if (diff < diferencia) {
             diferencia = diff;
             mejor_encontrado = v;
+            mejores_operaciones = operaciones_hechas;
         }
     }
 }
 
-// Función recursiva que explora todas las combinaciones posibles
-void CifrasSolver::backtrack(std::vector<int> nums) {
-    // Construimos un estado a partir de los números actuales (sin importar el orden)
-    std::multiset<int> estado(nums.begin(), nums.end());
+// Función recursiva buscar()
+void cifras_set::buscar(vector<int> numeros,
+                        vector<Operacion> operaciones_hechas) {
 
-    // Si ya habíamos visto este estado, no tiene sentido repetirlo
-    if (visitados.count(estado) > 0) {
-        return;
-    }
+    multiset<int> estado(numeros.begin(), numeros.end());
 
-    // Marcamos este estado como visitado
+    // Evitar estados repetidos
+    if (visitados.count(estado) > 0) return;
     visitados.insert(estado);
 
-    // Comprobamos si con estos números mejoramos la mejor solución
-    probarMejoria(nums);
+    // ¿Mejora la solución?
+    probarMejoria(numeros, operaciones_hechas);
 
-    // Si ya hemos llegado exactamente al objetivo, no seguimos
-    if (diferencia == 0) {
-        return;
-    }
+    if (diferencia == 0) return;
+    if (numeros.size() < 2) return;
 
-    // Si tenemos menos de dos números, ya no podemos operar más
-    if (nums.size() < 2) {
-        return;
-    }
+    int n = numeros.size();
 
-    int n = static_cast<int>(nums.size());
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
 
-    // Recorremos todas las parejas de índices (i, j) con i < j
-    for (int i = 0; i < n - 1; ++i) {
-        for (int j = i + 1; j < n; ++j) {
-            int a = nums[i];
-            int b = nums[j];
+            int a = numeros[i];
+            int b = numeros[j];
 
-            // Operaciones posibles con a y b
-            std::vector<Operacion> ops = generarOperaciones(a, b);
+            vector<Operacion> ops = generarOperaciones(a, b);
 
-            // Construimos el resto de números (todos menos i y j)
-            std::vector<int> resto;
-            for (int k = 0; k < n; ++k) {
-                if (k != i && k != j) {
-                    resto.push_back(nums[k]);
-                }
+            vector<int> resto;
+            for (int k = 0; k < n; k++) {
+                if (k != i && k != j) resto.push_back(numeros[k]);
             }
 
-            // Para cada operación, generamos un nuevo estado y seguimos recursivamente
-            for (std::size_t t = 0; t < ops.size(); ++t) {
-                int resultado = ops[t].resultado;
+            for (size_t t = 0; t < ops.size(); t++) {
 
-                std::vector<int> nuevos_nums = resto;
-                nuevos_nums.push_back(resultado);
+                vector<int> nuevos_numeros = resto;
+                nuevos_numeros.push_back(ops[t].resultado);
 
-                backtrack(nuevos_nums);
+                vector<Operacion> nuevas_operaciones = operaciones_hechas;
+                nuevas_operaciones.push_back(ops[t]);
 
-                // Si ya hemos dado con el objetivo exacto, cortamos por aquí
-                if (diferencia == 0) {
-                    return;
-                }
+                buscar(nuevos_numeros, nuevas_operaciones);
+
+                if (diferencia == 0) return;
             }
         }
     }
 }
 
-// Prepara el estado interno, lanza el backtracking y devuelve el resultado
-CifrasSolver::Resultado
-CifrasSolver::resolver(const std::vector<int> &numeros, int objetivo) {
-    // Inicializamos los datos internos
+// Método principal resolver()
+cifras_set::Solucion
+cifras_set::resolver(const vector<int> &numeros_iniciales, int objetivo) {
+
     objetivo_actual = objetivo;
     mejor_encontrado = 0;
-    diferencia = std::abs(objetivo_actual);
+    diferencia = abs(objetivo_actual);
     visitados.clear();
+    mejores_operaciones.clear();
 
-    // Llamada inicial al backtracking
-    backtrack(numeros);
+    vector<Operacion> operaciones_hechas;
 
-    // Montamos la estructura de resultado
-    Resultado res;
-    res.objetivo = objetivo_actual;
-    res.mejor_valor = mejor_encontrado;
-    res.diferencia = diferencia;
-    res.exacto = (diferencia == 0);
+    buscar(numeros_iniciales, operaciones_hechas);
 
-    return res;
+    Solucion sol;
+    sol.objetivo   = objetivo_actual;
+    sol.mejor_valor = mejor_encontrado;
+    sol.diferencia = diferencia;
+    sol.exacto = (diferencia == 0);
+    sol.operaciones = mejores_operaciones;
+
+    return sol;
 }
 
+// ==============================
+//              MAIN
+// ==============================
+
 int main() {
-    std::cout << "Juego de las cifras (sin mostrar operaciones)\n";
 
-    // Leemos los 6 numeros de la tirada
-    std::vector<int> numeros(6);
-    std::cout << "Introduce 6 numeros separados por espacio: ";
-    for (int i = 0; i < 6; ++i) {
-        std::cin >> numeros[i];
-    }
+    cout << "Juego de las cifras\n";
 
-    // Leemos el objetivo
+    vector<int> numeros(6);
+    cout << "Introduce 6 numeros: ";
+    for (int i = 0; i < 6; i++) cin >> numeros[i];
+
     int objetivo;
-    std::cout << "Introduce el objetivo (numero de 3 cifras): ";
-    std::cin >> objetivo;
+    cout << "Introduce el objetivo: ";
+    cin >> objetivo;
 
-    // Creamos el solver y resolvemos
-    CifrasSolver solver;
-    CifrasSolver::Resultado res = solver.resolver(numeros, objetivo);
+    cifras_set solver;
+    cifras_set::Solucion sol = solver.resolver(numeros, objetivo);
 
-    // Mostramos el resultado
-    std::cout << "\nObjetivo: " << res.objetivo << "\n";
-    std::cout << "Mejor valor encontrado: " << res.mejor_valor << "\n";
-    std::cout << "Diferencia: " << res.diferencia << "\n";
+    cout << "\nObjetivo: " << sol.objetivo << "\n";
+    cout << "Mejor valor: " << sol.mejor_valor << "\n";
+    cout << "Diferencia: " << sol.diferencia << "\n";
 
-    if (res.exacto) {
-        std::cout << "Se ha encontrado una solucion EXACTA.\n";
-    } else {
-        std::cout << "No hay solucion exacta, se muestra la mas cercana.\n";
+    if (sol.exacto)
+        cout << "Solucion exacta encontrada.\n";
+    else
+        cout << "No hay solucion exacta.\n";
+
+    cout << "\nOperaciones realizadas:\n";
+
+    for (size_t i = 0; i < sol.operaciones.size(); i++) {
+        const cifras_set::Operacion &op = sol.operaciones[i];
+        cout << op.a << " " << op.op << " " << op.b
+             << " = " << op.resultado << "\n";
     }
 
     return 0;

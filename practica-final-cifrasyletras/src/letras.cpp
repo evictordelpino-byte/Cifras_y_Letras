@@ -1,6 +1,7 @@
 #include "letras.h"
 #include <iostream>
 
+using namespace std;
 LETRASInfo::LETRASInfo(){
     c = ' ';
     r = 0;
@@ -12,6 +13,13 @@ LETRASInfo::LETRASInfo(char carac, int rep, int punt){
     r = rep;
     p = punt;
 }
+
+LETRASInfo::LETRASInfo(const LETRASInfo& otro) {
+    c = otro.c;
+    r = otro.r;
+    p = otro.p;
+}
+
 
 char LETRASInfo::caracter() const{
     return c;
@@ -29,8 +37,8 @@ void LETRASInfo::SetRepeticiones(int rep){
     r = rep;
 }
 
-LETRASInfo& LETRASInfo::operator=(const LETRASInfo& otro){
-    if(this != &otro){
+LETRASInfo& LETRASInfo::operator=(const LETRASInfo& otro) {
+    if (this != &otro) {
         c = otro.c;
         r = otro.r;
         p = otro.p;
@@ -38,31 +46,36 @@ LETRASInfo& LETRASInfo::operator=(const LETRASInfo& otro){
     return *this;
 }
 
-bool LETRASInfo::operator==(const LETRASInfo& otro) const{
-    return c == otro.c;
+bool LETRASInfo::operator==(const LETRASInfo& otro) const {
+    return c == otro.c && r == otro.r && p == otro.p;
 }
 
-bool LETRASInfo::operator==(char otro) const{
+bool LETRASInfo::operator==(char otro) const {
     return c == otro;
 }
 
-bool LETRASInfo::operator<(const LETRASInfo& otro) const{
+bool LETRASInfo::operator<(const LETRASInfo& otro) const {
     return c < otro.c;
 }
 
-bool LETRASInfo::operator<(char otro) const{
+bool LETRASInfo::operator<(char otro) const {
     return c < otro;
 }
 
-std::istream& operator>>(std::istream& is, LETRASInfo& letra){
-    char carac;
+istream& operator>>(istream& is, LETRASInfo& letra) {
+    char car;
     int rep, punt;
-    is >> carac >> rep >> punt;
-    letra = LETRASInfo(carac, rep, punt);
+
+    if (is >> car >> rep >> punt) {
+        letra.c = car;
+        letra.r = rep;
+        letra.p = punt;
+    }
+
     return is;
 }
 
-std::ostream& operator<<(std::ostream& os, const LETRASInfo& letra){
-    os << letra.caracter() << " " << letra.repeticiones() << " " << letra.puntuacion() << std::endl;
+ostream& operator<<(ostream& os, const LETRASInfo& letra) {
+    os << letra.c << " " << letra.r << " " << letra.p;
     return os;
 }

@@ -21,24 +21,25 @@ Letras_Set::Letras_Set(const multiset<LETRASInfo>& letras_repetidas){
 }
 
 Letras_Set::Letras_Set(const string& nombre_fichero){
-    letras = set<LETRASInfo>();
-    LETRASInfo Letra;
+    letras.clear();
+
     ifstream in(nombre_fichero);
-    if(!in){
+    if (!in) {
         cerr << "Error al abrir el fichero " << nombre_fichero << endl;
         exit(1);
     }
 
-    while(in.peek() =='#'){ // salta las lineas de comentario
-        in.getline(nullptr, 0);
+    string header;
+    getline(in, header);  // Saltamos la primera línea "Letra Cantidad Puntos"
+
+    LETRASInfo L;
+    while (in >> L) {
+        letras.insert(L);
     }
-    
-    while(!in.eof()){
-        in >> Letra;
-        letras.insert(Letra);
-    }
-    in.close();
 }
+
+
+
 
 Letras_Set::~Letras_Set(){
     letras.clear();
