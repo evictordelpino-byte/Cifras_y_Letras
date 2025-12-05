@@ -1,8 +1,7 @@
 #include "cifras_set.h"
 
-#include <cstdlib> 
-
-
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 using namespace std;
@@ -137,6 +136,7 @@ int main() {
 
     cout << "Juego de las cifras\n";
 
+    /*
     vector<int> numeros(6);
     cout << "Introduce 6 numeros: ";
     for (int i = 0; i < 6; i++) cin >> numeros[i];
@@ -144,6 +144,24 @@ int main() {
     int objetivo;
     cout << "Introduce el objetivo: ";
     cin >> objetivo;
+
+    */
+
+    srand(time(nullptr));
+    vector<int> C = {1,2,3,4,5,6,7,8,9,10,25,50,75,100};
+    vector<int> numeros;
+    int objetivo = rand()%1000;
+    for(int i = 0; i < 6; ++i){
+        numeros.push_back(C[rand()%C.size()]);
+    }
+
+    cout << "Numeros seleccionados: " << endl;
+    for(auto it = numeros.begin(); it != numeros.end(); ++it){
+        cout << *it << " ";
+    }
+    cout << endl;
+
+    cout << "numero objetivo: " << objetivo << endl;
 
     cifras_set solver;
     cifras_set::Solucion sol = solver.resolver(numeros, objetivo);

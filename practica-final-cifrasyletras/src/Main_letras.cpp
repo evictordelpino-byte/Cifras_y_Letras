@@ -2,6 +2,8 @@
 #include <string>
 #include <map>
 #include <cctype>
+#include <cstdlib>
+#include <ctime>
 
 #include "diccionario.h"
 #include "bolsa_letras.h"
@@ -41,6 +43,8 @@ int main(int argc, char** argv) {
         cout << "Modo de juego no válido. Usar P para puntos o L para letras." << endl;
         return 1;
     }
+
+    srand(time(nullptr));
 
     Diccionario dic(argv[1]);
     Letras_Set letras(argv[2]);  // conjunto completo de letras del juego
