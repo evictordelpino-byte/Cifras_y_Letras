@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <map>
+#include <cctype>
 
 #include "diccionario.h"
 #include "bolsa_letras.h"
@@ -8,21 +10,31 @@
 
 using namespace std;
 
+// Helpers para normalizar mayúsculas/minúsculas
+string a_minusculas(string s) {
+    for (char &c : s) c = tolower(c);
+    return s;
+}
+
+string a_mayusculas(string s) {
+    for (char &c : s) c = toupper(c);
+    return s;
+}
+
 // MAIN PARA EL PROGRAMA DE LAS LETRAS
-bool chequea_posible(const string& palabra, const Letras_Set& letras_sacadas);
-int puntuacion_palabra(const string& palabra, const Letras_Set& letras);
+bool chequea_posible(const string& palabra_mayus, const Letras_Set& letras_sacadas);
+int puntuacion_palabra(const string& palabra, const Letras_Set& letras); // ya definida en letras_set.cpp
 set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const Diccionario& dic, char modo_juego);
 
 int main(int argc, char** argv) {
 
     if(argc < 5) {
         cout << "Como jugar: " << endl;
-        // cout << "Escribir: " << argv[0] << " <diccionario.txt> <letras.txt> <num_letras> <modo_juego>" << endl;
         cout << "Escribir: ./letras <diccionario.txt> <letras.txt> <num_letras> <modo_juego>" << endl;
         cout << "diccionario.txt: fichero de texto con el diccionario de palabras" << endl;
         cout << "letras.txt: fichero de texto con las letras y su información (puntuacion y repeticiones)" << endl;
         cout << "num_letras: número de letras a utilizar en la partida" << endl;
-        cout << "modo_juego: P para jugar por puntos y L par jugar por cantidad de letras" << endl;
+        cout << "modo_juego: P para jugar por puntos y L para jugar por cantidad de letras" << endl;
         return 1;
     }
     if(toupper(argv[4][0]) != 'P' && toupper(argv[4][0]) != 'L') {
@@ -31,13 +43,14 @@ int main(int argc, char** argv) {
     }
 
     Diccionario dic(argv[1]);
-    Letras_Set letras(argv[2]);
+    Letras_Set letras(argv[2]);  // conjunto completo de letras del juego
     cout << "Letras leidas" << endl;
     int num_letras = stoi(argv[3]);
-    char modo_juego = argv[4][0];
+    char modo_juego = toupper(argv[4][0]);
 
     bool jugando = true;
     while(jugando){
+        // Creamos bolsa y sacamos letras aleatorias
         BolsaLetras bolsa(letras);
         Letras_Set letras_sacadas(bolsa.saca(num_letras));
 
@@ -52,24 +65,40 @@ int main(int argc, char** argv) {
         }
         cout << endl;
 
-        do{
+        // Pedimos una palabra válida
+        while (true) {
             cout << "Introduce una palabra formada con las letras sacadas: ";
             cin >> palabra_usuario;
 
-            if(!dic.Esta(palabra_usuario)) {
+            string palabra_dic   = a_minusculas(palabra_usuario);  // para el diccionario
+            string palabra_mayus = a_mayusculas(palabra_usuario);  // para comprobar letras/puntuación
+
+            if (!dic.Esta(palabra_dic)) {
                 cout << "La palabra " << palabra_usuario << " no está en el diccionario." << endl;
-            }else if(!chequea_posible(palabra_usuario, letras_sacadas))
+                continue;
+            }
+
+            if (!chequea_posible(palabra_mayus, letras_sacadas)) {
                 cout << "La palabra " << palabra_usuario << " no se puede formar con las letras sacadas." << endl;
+                continue;
+            }
 
-        }while(!dic.Esta(palabra_usuario) || !chequea_posible(palabra_usuario, letras_sacadas));
+            // Si llega aquí: está en el diccionario y se puede formar
+            palabra_usuario = palabra_dic; // la guardamos en minúsculas (coherente con el diccionario)
+            break;
+        }
 
-        cout << "la punctuación de la palabra " << palabra_usuario << " es: ";
+        // Calculamos la puntuación de la palabra elegida
+        string palabra_mayus = a_mayusculas(palabra_usuario);
+
+        cout << "La puntuación de la palabra " << palabra_usuario << " es: ";
         
         if(modo_juego == 'P')
-            cout << puntuacion_palabra(palabra_usuario, letras) << "puntos." << endl;
+            cout << puntuacion_palabra(palabra_mayus, letras) << " puntos." << endl;
         else if(modo_juego == 'L')
             cout << palabra_usuario.length() << " letras." << endl;
 
+        // Buscamos las mejores soluciones posibles
         mejores_palabras = SolucionesPosibles(letras_sacadas, dic, modo_juego);
 
         cout << "Las mejores soluciones posibles son: " << endl;
@@ -78,7 +107,7 @@ int main(int argc, char** argv) {
         }
         cout << "La puntuacion maxima era de: ";
         if(modo_juego == 'P')
-            cout << puntuacion_palabra(*mejores_palabras.begin(), letras) << " puntos." << endl;
+            cout << puntuacion_palabra(a_mayusculas(*mejores_palabras.begin()), letras) << " puntos." << endl;
         else if(modo_juego == 'L')
             cout << (*mejores_palabras.begin()).length() << " letras." << endl;
 
@@ -86,73 +115,96 @@ int main(int argc, char** argv) {
         char respuesta;
         do{
             cin >> respuesta;
-            if(toupper(respuesta) != 'S' || std::toupper(respuesta) != 'N'){
+            respuesta = toupper(respuesta);
+            if(respuesta != 'S' && respuesta != 'N'){
                 cout << "Introduzca una respuesta válida (s/n)." << endl;
-            }else if(toupper(respuesta) == 'N'){
+            }else if(respuesta == 'N'){
                 jugando = false;
             }
-        }while(toupper(respuesta) != 'S' && toupper(respuesta) != 'N');
+        }while(respuesta != 'S' && respuesta != 'N');
     }
 
     return 0;
 }
 
-bool chequea_posible(const string& palabra, const Letras_Set& letras_sacadas) {
-    Letras_Set letras_palabra;
-    for(char c : palabra){
-        letras_palabra.insert(c);
+// Comprueba si palabra_mayus se puede formar con las letras_sacadas
+bool chequea_posible(const string& palabra_mayus, const Letras_Set& letras_sacadas) {
+    // Contamos letras disponibles en letras_sacadas
+    map<char,int> disponibles;
+    for (auto it = letras_sacadas.begin(); it != letras_sacadas.end(); ++it) {
+        LETRASInfo info = *it;
+        disponibles[info.caracter()] += info.repeticiones();
     }
-    for(auto it = letras_palabra.begin(); it != letras_palabra.end(); ++it){
-        if((*it).repeticiones() > (*letras_sacadas.find(*it)).repeticiones()){
+
+    // Contamos letras necesarias en la palabra
+    map<char,int> necesarias;
+    for (char c : palabra_mayus) {
+        necesarias[c]++;
+    }
+
+    // Comprobamos que para cada letra hay suficientes en las disponibles
+    for (auto &par : necesarias) {
+        char letra = par.first;
+        int veces = par.second;
+        if (disponibles[letra] < veces)
             return false;
-        }
     }
+
     return true;
 }
 
+// Calcula las mejores soluciones posibles según el modo de juego
 set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const Diccionario& dic, char modo_juego) {
     set<string> soluciones;
     int mejor_puntuacion = 0;
     vector<string> palabras_candidatas;
-    for(int len = 1; len <= letras_sacadas.size(); ++len){
-        palabras_candidatas.insert(palabras_candidatas.end(), dic.PalabrasLongitud(len).begin(), dic.PalabrasLongitud(len).end());
+
+    // Calculamos el máximo número de letras que podemos usar (sumando repeticiones)
+    int max_len = 0;
+    for (auto it = letras_sacadas.begin(); it != letras_sacadas.end(); ++it) {
+        LETRASInfo info = *it;
+        max_len += info.repeticiones();
     }
-    // Para cada palabra evaluamos si se puede formar con las letras sacadas y seleccionamos las mejores
-    for(const string& palabra : palabras_candidatas){
-        Letras_Set letras_palabra;
-        for(char c : palabra){
-            letras_palabra.insert(c);
-        }
-        bool puede_formarse = true;
-        for(auto it = letras_palabra.begin(); it != letras_palabra.end(); ++it){
-            if((*it).repeticiones() > (*letras_sacadas.find(*it)).repeticiones()){
-                puede_formarse = false;
+
+    // Recogemos palabras del diccionario hasta longitud = max_len
+    for(int len = 1; len <= max_len; ++len){
+        vector<string> v = dic.PalabrasLongitud(len);
+        palabras_candidatas.insert(palabras_candidatas.end(), v.begin(), v.end());
+    }
+
+    // Evaluamos cada palabra candidata
+    for(const string& palabra_dic : palabras_candidatas){
+        string palabra_mayus = a_mayusculas(palabra_dic);
+
+        if (!chequea_posible(palabra_mayus, letras_sacadas))
+            continue;
+
+        int puntuacion_actual = 0;
+        if(modo_juego == 'P'){
+            puntuacion_actual = puntuacion_palabra(palabra_mayus, letras_sacadas);
+            if(puntuacion_actual > mejor_puntuacion){
+                mejor_puntuacion = puntuacion_actual;
+                soluciones.clear();
+                soluciones.insert(palabra_dic);
+            } else if(puntuacion_actual == mejor_puntuacion){
+                soluciones.insert(palabra_dic);
             }
-        }
-        if(puede_formarse){
-            int puntuacion_actual = 0;
-            if(modo_juego == 'P'){
-                puntuacion_actual = puntuacion_palabra(palabra, letras_sacadas);
-                if(puntuacion_actual > mejor_puntuacion){
-                    mejor_puntuacion = puntuacion_actual;
-                    soluciones.clear();
-                    soluciones.insert(palabra);
-                } else if(puntuacion_actual == mejor_puntuacion){
-                    soluciones.insert(palabra);
-                }
-            } else if(modo_juego == 'L'){
-                if(int(palabra.length()) > mejor_puntuacion){
-                    mejor_puntuacion = palabra.length();
-                    soluciones.clear();
-                    soluciones.insert(palabra);
-                } else if(int(palabra.length()) == mejor_puntuacion){
-                    soluciones.insert(palabra);
-                }
+        } else if(modo_juego == 'L'){
+            if(int(palabra_dic.length()) > mejor_puntuacion){
+                mejor_puntuacion = palabra_dic.length();
+                soluciones.clear();
+                soluciones.insert(palabra_dic);
+            } else if(int(palabra_dic.length()) == mejor_puntuacion){
+                soluciones.insert(palabra_dic);
             }
         }
     }
     return soluciones;
 }
+
+// en el directorio practica-final-cifrasyletras/
+// compilar con: g++ -std=c++17 -Wall -Wextra -I include -o letras src/Main_letras.cpp src/diccionario.cpp src/letras.cpp src/letras_set.cpp src/bolsa_letras.cpp
+
 
 // en el directorio practica-final-cifrasyletras/
 // compilar con: g++ -std=c++17 -Wall -Wextra -I include -o letras src/Main_letras.cpp src/diccionario.cpp src/letras.cpp src/letras_set.cpp src/bolsa_letras.cpp

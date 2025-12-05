@@ -7,6 +7,9 @@ Letras_Set::Letras_Set(){
 
 Letras_Set::Letras_Set(const multiset<LETRASInfo>& letras_repetidas){
     letras = set<LETRASInfo>();
+    if (letras_repetidas.empty())
+    return;
+
     LETRASInfo letra_insertar = *letras_repetidas.begin();
     for(auto it = ++letras_repetidas.begin(); it != letras_repetidas.end(); ++it){
         LETRASInfo letra_actual = *it;
@@ -137,4 +140,12 @@ int puntuacion_palabra(const string& palabra, const Letras_Set& letras){
         puntos += letras.puntuacion(c);
     }
     return puntos;
+}
+
+bool Letras_Set::isEmpty() const {
+    return letras.empty();
+}
+
+void Letras_Set::erase(LETRASInfo letra){
+    letras.erase(letra);
 }

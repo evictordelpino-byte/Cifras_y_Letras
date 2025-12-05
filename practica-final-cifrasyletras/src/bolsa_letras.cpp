@@ -44,8 +44,11 @@ void BolsaLetras::Insertar(LETRASInfo letra){
 }
 
 void BolsaLetras::Borrar(LETRASInfo letra){
-    Letras.erase(letra);
+    auto it = Letras.find(letra);
+    if (it != Letras.end())
+        Letras.erase(it);   // solo borro una
 }
+
 
 multiset<LETRASInfo> BolsaLetras::saca(int n){
     multiset<LETRASInfo> sacadas;
