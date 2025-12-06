@@ -137,6 +137,7 @@ int main() {
     cout << "Juego de las cifras\n";
 
     /*
+    //En caso de desear introducir los numeros uno mismo
     vector<int> numeros(6);
     cout << "Introduce 6 numeros: ";
     for (int i = 0; i < 6; i++) cin >> numeros[i];

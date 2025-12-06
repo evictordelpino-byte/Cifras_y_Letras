@@ -13,19 +13,56 @@
 using namespace std;
 
 // Helpers para normalizar mayúsculas/minúsculas
+/**
+ * @brief pasa un string a minusculas
+ * 
+ * @param s string inicial
+ * @return string string en minuscula
+ */
 string a_minusculas(string s) {
     for (char &c : s) c = tolower(c);
     return s;
 }
 
+/**
+ * @brief pasa un string a mayuscula
+ * 
+ * @param s string inicial
+ * @return string string en mayuscula
+ */
 string a_mayusculas(string s) {
     for (char &c : s) c = toupper(c);
     return s;
 }
 
 // MAIN PARA EL PROGRAMA DE LAS LETRAS
+/**
+ * @brief Comprueba si es posible formar una palabra a partir de las letras tomadas
+ * 
+ * @param palabra_mayus Palabra a comprobar
+ * @param letras_sacadas Letras que se pueden usar
+ * @return true si es posible crearla
+ * @return false si no es posible crearla
+ */
 bool chequea_posible(const string& palabra_mayus, const Letras_Set& letras_sacadas);
+
+/**
+ * @brief determina la puntuación de una palabra dadas unas letras con puntuacion
+ * 
+ * @param palabra palabra a puntuar
+ * @param letras letras con su puntuacion
+ * @return int puntuacion de la palabra
+ */
 int puntuacion_palabra(const string& palabra, const Letras_Set& letras); // ya definida en letras_set.cpp
+
+/**
+ * @brief Busca las mejores soluciones de letras dado un diccionario, unas letras y un modo de juego
+ * 
+ * @param letras_sacadas letras que se pueden usar
+ * @param dic todas las palabras que son validas
+ * @param modo_juego P para puntuacion y L para tamaño
+ * @return set<string> mejores soluciones de letras
+ */
 set<string> SolucionesPosibles(const Letras_Set& letras_sacadas, const Diccionario& dic, char modo_juego);
 
 int main(int argc, char** argv) {
