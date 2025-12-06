@@ -27,9 +27,17 @@
         /**
          * @brief Constructor con parámetros
          * 
+         * @param c caracter
+         * @param r repeticiones
+         * @param p puntuacion
          */
         LETRASInfo(char c, int r, int p);
 
+        /**
+         * @brief Construye una letra a partir de otra
+         * 
+         * @param otro letra a copiar
+         */
         LETRASInfo(const LETRASInfo& otro);
 
 
@@ -61,13 +69,68 @@
          */
         void SetRepeticiones(int r);
 
+        /**
+         * @brief sobrecarga del operador de asignacion
+         *      asigna el valor de una letra a otra
+         * 
+         * @param otro letra que se copia
+         * @return LETRASInfo& 
+         */
         LETRASInfo& operator=(const LETRASInfo& otro);
+
+        /**
+         * @brief Coprueba si una letra es igual a otra
+         * 
+         * @param otro letra con la que comparar
+         * @return true si es igual
+         * @return false si no es igual
+         */
         bool operator==(const LETRASInfo& otro) const;
+
+        /**
+         * @brief Coprueba si una letra es igual a otra
+         * 
+         * @param otro letra con la que comparar
+         * @return true si es igual
+         * @return false si no es igual
+         */
         bool operator==(char otro) const;
+
+        /**
+         * @brief Comprueba si una letra es menor a otra
+         * 
+         * @param otro letra con la que comparar
+         * @return true si es menor
+         * @return false si es mayor
+         */
         bool operator<(const LETRASInfo& otro) const;
+
+        /**
+         * @brief Comprueba si una letra es menor a otra
+         * 
+         * @param otro letra con la que comparar
+         * @return true si es menor
+         * @return false si es mayor
+         */
         bool operator<(char otro) const;
 
+        //Sobrecarga de operadores
+        /**
+         * @brief recibe una letra mediante un flujo de entrada
+         * 
+         * @param is 
+         * @param letra 
+         * @return std::istream& 
+         */
         friend std::istream& operator>>(std::istream& is, LETRASInfo& letra);
+
+        /**
+         * @brief Muestra una letra por un flujo de salida
+         * 
+         * @param os 
+         * @param letra 
+         * @return std::ostream& 
+         */
         friend std::ostream& operator<<(std::ostream& os, const LETRASInfo& letra);
  };
 
