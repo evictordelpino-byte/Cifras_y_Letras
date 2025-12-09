@@ -128,9 +128,9 @@ cifras_set::resolver(const vector<int> &numeros_iniciales, int objetivo) {
     return sol;
 }
 
-// ==============================
+
 //              MAIN
-// ==============================
+
 
 int main() {
 
@@ -164,8 +164,8 @@ int main() {
 
     cout << "numero objetivo: " << objetivo << endl;
 
-    cifras_set solver;
-    cifras_set::Solucion sol = solver.resolver(numeros, objetivo);
+    cifras_set resultado;
+    cifras_set::Solucion sol = resultado.resolver(numeros, objetivo);
 
     cout << "\nObjetivo: " << sol.objetivo << "\n";
     cout << "Mejor valor: " << sol.mejor_valor << "\n";

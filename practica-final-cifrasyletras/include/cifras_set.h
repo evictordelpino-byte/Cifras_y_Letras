@@ -6,7 +6,7 @@
 
 
 //#include <multiset>
-//>>>>>>> 048ca9c (Mis cambios locales en cifras y letras)
+
 
 using namespace std;
 
