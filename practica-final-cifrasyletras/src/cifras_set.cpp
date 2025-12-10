@@ -7,8 +7,7 @@
 using namespace std;
 
 // Genera todas las operaciones posibles entre dos números
-vector<cifras_set::Operacion>
-cifras_set::generarOperaciones(int a, int b) const {
+vector<cifras_set::Operacion> cifras_set::generarOperaciones(int a, int b) const {
 
     vector<Operacion> ops;
     Operacion op;
@@ -24,19 +23,23 @@ cifras_set::generarOperaciones(int a, int b) const {
     // Resta (solo si es positiva)
     if (a > b) {
         op = {a, b, '-', a - b};
-        if (op.resultado > 0) ops.push_back(op);
+        if (op.resultado > 0) 
+        ops.push_back(op);
     } else if (b > a) {
         op = {b, a, '-', b - a};
-        if (op.resultado > 0) ops.push_back(op);
+        if (op.resultado > 0) 
+        ops.push_back(op);
     }
 
     // División exacta
     if (b != 0 && a % b == 0) {
         op = {a, b, '/', a / b};
-        if (op.resultado > 0) ops.push_back(op);
+        if (op.resultado > 0) 
+        ops.push_back(op);
     } else if (a != 0 && b % a == 0) {
         op = {b, a, '/', b / a};
-        if (op.resultado > 0) ops.push_back(op);
+        if (op.resultado > 0) 
+        ops.push_back(op);
     }
 
     return ops;
@@ -47,9 +50,9 @@ void cifras_set::probarMejoria(const vector<int> &numeros,
                                const vector<Operacion> &operaciones_hechas) {
 
     for (int v : numeros) {
-        int diff = abs(v - objetivo_actual);
+        int diff = abs(v - objetivo_actual); //Para cada numero calcula distancia con el objetivo
 
-        if (diff < diferencia) {
+        if (diff < diferencia) { 
             diferencia = diff;
             mejor_encontrado = v;
             mejores_operaciones = operaciones_hechas;
@@ -61,43 +64,56 @@ void cifras_set::probarMejoria(const vector<int> &numeros,
 void cifras_set::buscar(vector<int> numeros,
                         vector<Operacion> operaciones_hechas) {
 
+
+    //1. Representar estado y evitar repeticiones
+    //Se construye multiset con los numeros actuales
     multiset<int> estado(numeros.begin(), numeros.end());
 
-    // Evitar estados repetidos
-    if (visitados.count(estado) > 0) return;
-    visitados.insert(estado);
+    // Evitar estados repetidos si ya se han realizado esos estados 
+    if (visitados.count(estado) > 0) return; //visitados.count devuelve 0 si nunca se ha visto o 1 si si
+    visitados.insert(estado); //guarda estados vistos
 
-    // ¿Mejora la solución?
+    //2. Comprobar si mejora la solucion
     probarMejoria(numeros, operaciones_hechas);
 
     if (diferencia == 0) return;
-    if (numeros.size() < 2) return;
-
+    //3. Si quedan 1 numero o ninguno no podemos seguir operando
     int n = numeros.size();
+    if (n < 2) return;
 
+
+    //4. Recorrer todas las parejas para generar operaciones
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
 
             int a = numeros[i];
             int b = numeros[j];
 
+            //5. Genera operaciones
             vector<Operacion> ops = generarOperaciones(a, b);
 
+            //6. Resto de numeros (todos los numeros menos con los que estamos operando)
             vector<int> resto;
             for (int k = 0; k < n; k++) {
-                if (k != i && k != j) resto.push_back(numeros[k]);
+                if (k != i && k != j) 
+                resto.push_back(numeros[k]);
             }
 
-            for (size_t t = 0; t < ops.size(); t++) {
+            //7. Probar cada operacion con esa pareja (a,b)
+            for (int l = 0; t < ops.size(); l++) {
 
+                //Creo nuevo conjunto de numeros con los numeros que no se han usado
                 vector<int> nuevos_numeros = resto;
-                nuevos_numeros.push_back(ops[t].resultado);
+                // Añadimos resultado de la operacion con a y b
+                nuevos_numeros.push_back(ops[l].resultado);
 
+                // Nuevo historial de operaciones hechas
                 vector<Operacion> nuevas_operaciones = operaciones_hechas;
-                nuevas_operaciones.push_back(ops[t]);
+                nuevas_operaciones.push_back(ops[l]);
 
                 buscar(nuevos_numeros, nuevas_operaciones);
 
+                //Si encuentra solucion sale de la funcion
                 if (diferencia == 0) return;
             }
         }
@@ -105,12 +121,11 @@ void cifras_set::buscar(vector<int> numeros,
 }
 
 // Método principal resolver()
-cifras_set::Solucion
-cifras_set::resolver(const vector<int> &numeros_iniciales, int objetivo) {
+cifras_set::Solucion cifras_set::resolver(const vector<int> &numeros_iniciales, int objetivo) {
 
-    objetivo_actual = objetivo;
+    objetivo_actual = objetivo; //guarda el objetivo de la partida se usa para distancia
     mejor_encontrado = 0;
-    diferencia = abs(objetivo_actual);
+    diferencia = abs(objetivo_actual); //la peor diferencia es |0 - objetivo|
     visitados.clear();
     mejores_operaciones.clear();
 
