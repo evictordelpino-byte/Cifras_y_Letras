@@ -40,6 +40,8 @@ int Diccionario::size() const {
 }
 
 bool Diccionario::Esta(const string& palabra) const{
+    //palabras.find(palabra) devuelve iterator al elemento 
+    //si no encuentra devuelve palabras.end()
     return palabras.find(palabra) != palabras.end();
 }
 

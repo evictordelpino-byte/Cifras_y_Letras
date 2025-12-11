@@ -7,19 +7,24 @@ Letras_Set::Letras_Set(){
 
 Letras_Set::Letras_Set(const multiset<LETRASInfo>& letras_repetidas){
     letras = set<LETRASInfo>();
+   // si vacia nada
     if (letras_repetidas.empty())
     return;
-
+    //tomamos primera letra
     LETRASInfo letra_insertar = *letras_repetidas.begin();
+    //recorremos resto para agrupar repeticiones
     for(auto it = ++letras_repetidas.begin(); it != letras_repetidas.end(); ++it){
         LETRASInfo letra_actual = *it;
+        //si misma letra aumentamos repeticiones
         if(letra_actual.caracter() == letra_insertar.caracter()){
             letra_insertar.SetRepeticiones(letra_insertar.repeticiones() + 1);
         } else {
+            // Si cambia la letra, insertamos la agrupada y empezamos una nueva
             letras.insert(letra_insertar);
             letra_insertar = letra_actual;
         }
     }
+    //insertamos el ultimo grupo de letras
     letras.insert(letra_insertar);
 }
 

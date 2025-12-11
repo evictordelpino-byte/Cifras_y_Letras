@@ -100,7 +100,7 @@ void cifras_set::buscar(vector<int> numeros,
             }
 
             //7. Probar cada operacion con esa pareja (a,b)
-            for (int l = 0; t < ops.size(); l++) {
+            for (int l = 0; l < ops.size(); l++) {
 
                 //Creo nuevo conjunto de numeros con los numeros que no se han usado
                 vector<int> nuevos_numeros = resto;
@@ -145,6 +145,10 @@ cifras_set::Solucion cifras_set::resolver(const vector<int> &numeros_iniciales, 
 
 
 //              MAIN
+// g++ -std=c++17 src/cifras_set.cpp -Iinclude -o cifras
+// ./cifras
+
+
 
 
 int main() {
