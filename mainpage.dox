@@ -3,7 +3,8 @@
 # Introducción
 
 Se han realizado dos proyectos, cifras, en la carpeta cifras y letras, en la carpeta letras.
-El proyecto cifras calcula las operaciones a seguir partiendo de un vector de números para obtener un numero objetivo
+El proyecto cifras calcula las operaciones a seguir partiendo de un vector de números para obtener un número objetivo. 
+En caso de no poder alcanzar el número objetivo calcula la solución más cercana al número objetivo.
 El proyecto letras es un juego en el que el jugador elige una palabra partiendo de un multiset de letras 
 y en caso de que pertenezca al diccionario puntuarla y compararla con las mejores soluciones posibles.
 
